@@ -1,0 +1,7 @@
+{
+  "name": "interview-assessment",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
