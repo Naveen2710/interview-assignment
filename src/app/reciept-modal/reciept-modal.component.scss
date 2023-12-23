@@ -1,0 +1,52 @@
+.heading {
+  height: 50px;
+  font-size: 20px;
+  font-weight: 600;
+  background-color: #132256;
+  display: flex;
+
+  ion-label {
+    color: #fff;
+    margin: auto 15px;
+  }
+}
+
+.content {
+  height: 85%;
+  padding: 16px;
+  overflow-y: auto;
+
+  .sale-no {
+    text-align: center;
+    font-size: 18px;
+    margin: 8px;
+    font-weight: 600;
+  }
+
+  .date-time {
+    margin: 8px auto;
+  }
+
+  ion-row {
+    border-top: 1px solid #cdcdcd;
+  }
+
+  .variable-sec {
+    margin-top: 32px;
+  }
+
+  .quantity-row {
+    text-align: center;
+  }
+
+  .total-row {
+    text-align: right;
+  }
+}
+
+ion-button {
+  border-top: 1px solid #cdcdcd;
+  padding-top: 16px;
+  margin: 0px;
+  padding: 8px;
+}

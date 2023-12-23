@@ -1,20 +1,112 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<section class="main-content">
+  <div class="operation">
+    <div class="item-list">
+      <ion-row class="heading">
+        <ion-col size="2"></ion-col>
+        <ion-col size="4">
+          <ion-label>Products</ion-label>
+        </ion-col>
+        <ion-col size="1">
+          <ion-label>Price</ion-label>
+        </ion-col>
+        <ion-col size="4">
+          <ion-label>Quantity</ion-label>
+        </ion-col>
+        <ion-col size="1">
+          <ion-label>Total</ion-label>
+        </ion-col>
+      </ion-row>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <ng-container *ngIf="addedProducts.length; else noProduct">
+        <ion-row class="added-products" *ngFor="let item of addedProducts; let i = index">
+          <ion-col size="1" class="removecircle">
+            <ion-icon color="danger" name="close-circle" (click)="removeProduct(i)"></ion-icon>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label>{{item['name']}}</ion-label>
+          </ion-col>
+          <ion-col size="2">
+            <ion-label>{{item['price']}}</ion-label>
+          </ion-col>
+          <ion-col size="4" class="quantity-row">
+            <ion-icon name="remove" (click)="decrease(item)"></ion-icon>
+            <ion-label>{{item['quantity']}}</ion-label>
+            <ion-icon name="add" (click)="increase(item)"></ion-icon>
+          </ion-col>
+          <ion-col size="1">
+            <ion-label>{{item['price'] * item['quantity']}}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ng-container>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <ng-template #noProduct>
+        <div class="no-product">THERE ARE NO PRODUCTS</div>
+      </ng-template>
+    </div>
+
+    <div class="calculation-section">
+      <ion-row>
+        <ion-col size="5" class="calc-title">
+          <ion-label>SubTotal</ion-label>
+        </ion-col>
+        <ion-col class="subtotal">
+          <span>{{subTotal}}</span>
+          <span>{{totalItems}} items</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="5" class="calc-title">
+          <ion-label>VAT Tax</ion-label>
+        </ion-col>
+        <ion-col class="vat">
+          <span>
+            <input type="number" [(ngModel)]="vatValue" (keyup)="calculate($event, 'vat')"> %
+          </span>
+          <span>{{subTotal * vat / 100}} EUR</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="5" class="calc-title">
+          <ion-label>Discount</ion-label>
+        </ion-col>
+        <ion-col class="discount">
+          <span>
+            <input type="number" [(ngModel)]="discountValue" (keyup)="calculate($event, 'discount')"> %
+          </span>
+          <span>{{subTotal * discount / 100}} EUR</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="5" class="calc-title">
+          <ion-label>Total</ion-label>
+        </ion-col>
+        <ion-col class="total">
+          <ion-label color="success">{{grandTotal}} EUR</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="action-buttons">
+        <ion-col>
+          <ion-button color="danger" expand="full" (click)="resetPanel()">Cancel Sale</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="success" expand="full" (click)="recieptPreview()">Process Sale</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
   </div>
-</ion-content>
+
+  <div class="product-list">
+    <div class="product-items">
+      <span class="item"
+        *ngFor="let item of productData"
+        [style.backgroundColor]="item['backgroundColor']"
+        (click)="addProduct(item)"
+        [title]="item['price'] + '\n' + item['description']"
+      >{{item.name}}</span>
+    </div>
+  </div>
+</section>
